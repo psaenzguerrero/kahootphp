@@ -41,6 +41,6 @@ $fin = $usuarioObj->finalizarCuestionario($usuarioId);
 
         <?php endforeach; ?>
     </div>
-    <a href="ranking.php">ENVIAR</a>
+    <a href=<?"ranking.php?nombre=$usuarioId"?>>ENVIAR</a>
 </body>
 </html>
