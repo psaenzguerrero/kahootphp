@@ -3,7 +3,7 @@ require_once 'clases.php';
 
 $usuarioId = $_GET['user_id'];
 $preguntas = $preguntaObj->obtenerPreguntasAleatorias();
-
+$fin = $usuarioObj->finalizarCuestionario($usuarioId);
 ?>
 
 <!DOCTYPE html>
@@ -41,5 +41,6 @@ $preguntas = $preguntaObj->obtenerPreguntasAleatorias();
 
         <?php endforeach; ?>
     </div>
+    <a href="ranking.php">ENVIAR</a>
 </body>
 </html>

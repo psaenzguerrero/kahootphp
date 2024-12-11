@@ -1,11 +1,18 @@
 <?php
 require_once 'clases.php';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nombre = $_POST['nombre'];
+    echo $nombre;
+    $usuarioId = $usuarioObj->finalizarCuestionario($nombre);
+}
+
 $result = $conn->query("SELECT nombreUsuario, TIMESTAMPDIFF(SECOND, tiempoInicio, tiempoFinal) AS tiempo 
                         FROM usuarios 
                         WHERE tiempoFinal IS NOT NULL 
                         ORDER BY tiempo ASC");
 $ranking = $result->fetch_all(MYSQLI_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +29,7 @@ $ranking = $result->fetch_all(MYSQLI_ASSOC);
         </tr>
         <?php foreach ($ranking as $fila): ?>
             <tr>
-                <td><?= $fila['nombre'] ?></td>
+                <td><?= $fila['nombreUsuario'] ?></td>
                 <td><?= $fila['tiempo'] ?></td>
             </tr>
         <?php endforeach; ?>
