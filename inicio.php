@@ -5,8 +5,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
     echo $nombre;
     $usuarioId = $usuarioObj->insertar_usu($nombre);
-    if ($usuarioId[0]) {
-        header("Location: cuestionario.php?user_id=".$usuarioId[1]);
+    if (!$usuarioId) {
+        header("Location: cuestionario.php?nombre=".$nombre);
         exit;
     } else {
         $error = "El nombre ya está registrado. Por favor, elige otro.";
@@ -17,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kahoot Clone</title>
 </head>
 <body>

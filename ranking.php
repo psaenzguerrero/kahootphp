@@ -1,8 +1,8 @@
 <?php
 require_once 'clases.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $nombre = $_GET['nombre'];
     echo $nombre;
     $usuarioId = $usuarioObj->finalizarCuestionario($nombre);
 }
@@ -18,6 +18,8 @@ $ranking = $result->fetch_all(MYSQLI_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ranking</title>
 </head>
 <body>

@@ -26,26 +26,33 @@ class Usuario {
 
     public function insertar_usu($n) {
         $n = $this->bd->real_escape_string($n);
-
+        $existe=true;
         // Verificar si el nombre ya existe
-        $result = $this->bd->query("SELECT * FROM usuarios WHERE nombreUsuario='$n'");
+        $result = $this->bd->prepare("SELECT * FROM usuarios WHERE nombreUsuario=?");
+        $result->bind_param('s',$n);
+        $result->execute();
+        
+
 
         if ($result->num_rows > 0) {
-            return false; 
+            $result->close();
+            echo "Usuario ya existente";
+        }else{
+            $result->close();
+            $sent2=$this->bd->prepare("INSERT INTO usuarios (nombreUsuario) VALUES ('$n')");
+            $sent2->execute();
+            $existe = false;
+            
         }
 
         // Registrar el usuario
-        $this->bd->query("INSERT INTO usuarios (nombreUsuario, tiempoInicio) VALUES ('$n', NOW())");
-
-        if($this->bd->affected_rows == 1)
-            return [true, $this->bd->insert_id]; // Retornar el usuario creado
-        else
-            return [false, $this->bd->insert_id];
-   
+        
+        return $existe;
     }
 
     public function finalizarCuestionario($n) {
-        $this->bd->query("UPDATE usuarios SET tiempoFinal = NOW() WHERE nombreUsuario = $n");
+        $sent3=$this->bd->prepare("UPDATE usuarios SET tiempoFinal = NOW() WHERE nombreUsuario = '$n'");
+        $sent3->execute();
     }
 }
 
