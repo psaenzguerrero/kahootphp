@@ -61,7 +61,7 @@ $preguntas = $preguntaObj->obtenerPreguntasAleatorias();
 </head>
 <body>
     <div class="c">
-        
+        <!-- bucle para sacar las preguntas -->
         <?php foreach ($preguntas as $pregunta): ?>
             
             
@@ -73,7 +73,10 @@ $preguntas = $preguntaObj->obtenerPreguntasAleatorias();
 
         <?php endforeach; ?>
     </div>
+    <!-- boton para llevar al ranking -->
     <a id="a" href=<?php echo "ranking.php?nombre=$usuarioId" ?>>ENVIAR</a>
+    
+    <!-- esta puta mierda que tengo aqui hecha me ha echo mas viejo pero en la base es una promesa que comprueba la verificacion  -->
     <script>
         let cont = 1;
         function enviarRespuesta(preguntaId, respuesta) {

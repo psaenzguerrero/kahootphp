@@ -28,6 +28,7 @@ class Usuario {
     public function insertar_usu($n) {
         $n = $this->bd->real_escape_string($n);
         $existe=true;
+
         // Verificar si el nombre ya existe
         $result = $this->bd->prepare("SELECT * FROM usuarios WHERE nombreUsuario=?");
         $result->bind_param('s',$n);
@@ -40,17 +41,15 @@ class Usuario {
             echo "Usuario ya existente";
         }else{
             $result->close();
+            // Registrar el usuario
             $sent2=$this->bd->prepare("INSERT INTO usuarios (nombreUsuario) VALUES ('$n')");
             $sent2->execute();
             $existe = false;
             
         }
-
-        // Registrar el usuario
-        
         return $existe;
     }
-
+    //funcion para terminar el tiempo del jugador
     public function finalizarCuestionario($n) {
         $sent3=$this->bd->prepare("UPDATE usuarios SET tiempoFinal = NOW() WHERE nombreUsuario = '$n'");
         $sent3->execute();
@@ -75,9 +74,8 @@ class Pregunta {
         $result = $this->bd->query("SELECT * FROM preguntas ORDER BY RAND() LIMIT $cantidad");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
+    //Verificamos las respuestas dadas una por una
     public function verificarRespuesta($c, $respuesta) {
-
         $c = (int)$c;
         if ($c == 10) {
             $respuesta = $this->bd->real_escape_string($respuesta);
@@ -92,13 +90,10 @@ class Pregunta {
             $result = $this->bd->query("SELECT correcta FROM preguntas WHERE cod = $c");
             $row = $result->fetch_assoc();
         }
-        
-
         return strtolower($respuesta) === strtolower($row['correcta']);
     }
 }
-
-
+//Dejamos creados los objetos 
 $usuarioObj = new Usuario($conn);
 $preguntaObj = new Pregunta($conn);
 ?>
