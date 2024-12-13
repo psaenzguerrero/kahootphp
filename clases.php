@@ -5,6 +5,7 @@ $db_name = 'kahoot';
 $username = 'root';
 $password = '';
 $conn = new mysqli($host, $username, $password, $db_name);
+$conn->set_charset("utf8");
 
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
@@ -76,11 +77,22 @@ class Pregunta {
     }
 
     public function verificarRespuesta($c, $respuesta) {
-        $c = (int)$c;
-        $respuesta = $this->bd->real_escape_string($respuesta);
 
-        $result = $this->bd->query("SELECT correcta FROM preguntas WHERE cod = $c");
-        $row = $result->fetch_assoc();
+        $c = (int)$c;
+        if ($c == 10) {
+            $respuesta = $this->bd->real_escape_string($respuesta);
+            echo $respuesta;
+            $result = $this->bd->query("SELECT correcta FROM preguntas WHERE cod = $c corr LIKE '$respuesta'");
+            echo $result;
+            $row = $result->fetch_assoc();
+
+        }else{
+            $respuesta = $this->bd->real_escape_string($respuesta);
+
+            $result = $this->bd->query("SELECT correcta FROM preguntas WHERE cod = $c");
+            $row = $result->fetch_assoc();
+        }
+        
 
         return strtolower($respuesta) === strtolower($row['correcta']);
     }

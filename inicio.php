@@ -1,6 +1,5 @@
 <?php
 require_once 'clases.php';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
     echo $nombre;
@@ -13,13 +12,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kahoot Clone</title>
+    <style>
+        body{
+            text-align: center;
+            background-color: aquamarine;
+            margin: 50px;
+        }
+        .container{
+            background-color: rgba(255, 255, 255, 0.664);
+            margin: 100px;
+            padding: 50px;
+            h1{
+                font-size: 100px;
+            }
+            form{
+                input, button{
+                    padding: 20px;
+                    font-size: 40px;
+                    border-radius: 20px;
+                }
+                button:hover{
+                    background-color: black;
+                    color: white;
+                }
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
